@@ -288,32 +288,32 @@
             }
 
             // our final binary blob
-            // var blob = new Blob ([view], { "type" : "audio/wav" });
-            // var data = new FormData();
-            // data.append("audio", blob);
-            // console.log("about to send audio");
-            // factory.sendAudio(data).then(function successCB (response) {
-            //     console.log("SUCCESS SENDING AUDIO");
-            //     console.log(response);
-            //
-            //     var audioEl = document.querySelector("#audio");
-            //     var sourceEl = document.querySelector("#audio > source");
-            //
-            //     sourceEl.setAttribute("src", ["/downloadAudio?fileName=", response.tts.fileName, "&filePath=", response.tts.filePath].join(""));
-            //     audioEl.load();
-            //
-            //     audioEl.onplay = function () {
-            //         props.watsonSpeaking = true;
-            //     };
-            //     audioEl.onended = function () {
-            //         props.watsonSpeaking = false;
-            //     };
-            //     audio.play();
-            //
-            // }, function errorCB (error) {
-            //     console.log("ERROR SENDING AUDIO");
-            //     console.log(error);
-            // })
+            var blob = new Blob ([view], { "type" : "audio/wav" });
+            var data = new FormData();
+            data.append("audio", blob);
+            console.log("about to send audio");
+            factory.sendAudio(data).then(function successCB (response) {
+                console.log("SUCCESS SENDING AUDIO");
+                console.log(response);
+
+                var audioEl = document.querySelector("#audio");
+                var sourceEl = document.querySelector("#audio > source");
+
+                sourceEl.setAttribute("src", ["/downloadAudio?fileName=", response.tts.fileName, "&filePath=", response.tts.filePath].join(""));
+                audioEl.load();
+
+                audioEl.onplay = function () {
+                    props.watsonSpeaking = true;
+                };
+                audioEl.onended = function () {
+                    props.watsonSpeaking = false;
+                };
+                audio.play();
+
+            }, function errorCB (error) {
+                console.log("ERROR SENDING AUDIO");
+                console.log(error);
+            });
         },
         "interleave": function (leftchannel, rightchannel) {
             var length = leftchannel.length + rightchannel.length;
