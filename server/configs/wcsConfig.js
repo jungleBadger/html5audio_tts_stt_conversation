@@ -5,11 +5,11 @@
     "use strict";
 
     module.exports = {
-        "username": "ea8d1ca6-3234-4afd-ac9b-d703a35922de",
-        "password": "SIY0OlwdX7k6",
+        "username": "d6eb39bc-1ada-488b-86fe-ab677b8a7f91",
+        "password": "d3pMk8TtaRSW",
         "version": "v1",
         "version_date": "2017-04-21",
-        "workspace_id": "0c3a610d-c281-4101-a328-eff4c9f1f196"
+        "workspace_id": "ceb4e601-39fd-4efc-ab51-e9ce418b9b57"
     };
 
 }(process));

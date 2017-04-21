@@ -120,12 +120,18 @@
             if (props.recording || props.watsonSpeaking) {
                 props.analyser.getByteTimeDomainData(props.dataArray);
                 props.canvasCtx.fillStyle = "rgb(200, 200, 200)";
-                props.canvasCtx.fillRect(0, 0, 200, 200);
+                props.canvasCtx.fillRect(0, 0, 500, 200);
                 props.canvasCtx.lineWidth = 2;
-                props.canvasCtx.strokeStyle = "rgb(0, 0, 0)";
+
+                if (props.recording) {
+                    props.canvasCtx.strokeStyle = "rgb(88, 30, 172)";
+                } else if (props.watsonSpeaking) {
+                    props.canvasCtx.strokeStyle = "rgb(30, 172, 88)";
+                }
+
 
                 props.canvasCtx.beginPath();
-                var sliceWidth = 410 / props.bufferSize;
+                var sliceWidth = 1010 / props.bufferSize;
                 var x = 0;
 
                 for (var i = 0; i < props.bufferSize; i += 1) {
@@ -144,7 +150,7 @@
                 props.canvasCtx.lineTo(elements.canvas.width, elements.canvas.height / 2);
                 props.canvasCtx.stroke();
             } else {
-                props.canvasCtx.clearRect(0, 0, 200, 200);
+                props.canvasCtx.clearRect(0, 0, 500, 200);
             }
             requestAnimationFrame(methods.draw);
         },
@@ -359,7 +365,7 @@
                 });
 
                 elements.startBtn.addEventListener("click", methods.toggleRecording);
-                elements.sendTextBtn.addEventListener("click", methods.sendText);
+                // elements.sendTextBtn.addEventListener("click", methods.sendText);
             } else {
                 alert("getUserMedia not supported in this browser.");
             }
