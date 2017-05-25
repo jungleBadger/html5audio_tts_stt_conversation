@@ -6,7 +6,6 @@
 
 
     module.exports = function (app, upload, watsonTextToSpeech, watsonSpeechToText, watsonConversation, FileHandler, fs) {
-        console.log(watsonConversation);
         app.post("/convertAudioToText", upload.single("audio"), function (req, res) {
             FileHandler.saveFile("test", req.file).then(function (filePath) {
                 watsonSpeechToText.convertAudioToText(filePath).then(function (data) {
