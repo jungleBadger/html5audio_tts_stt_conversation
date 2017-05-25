@@ -3,6 +3,7 @@
     "use strict";
     var outputElement = document.getElementById("output");
     var outputString;
+    var socket = io.connect(document.location.href); //will that work on bluemix?
 
     var props = {
         "leftchannel": [],
@@ -129,7 +130,6 @@
                     props.canvasCtx.strokeStyle = "rgb(30, 172, 88)";
                 }
 
-
                 props.canvasCtx.beginPath();
                 var sliceWidth = 1010 / props.bufferSize;
                 var x = 0;
@@ -147,6 +147,7 @@
 
                     x += sliceWidth;
                 }
+
                 props.canvasCtx.lineTo(elements.canvas.width, elements.canvas.height / 2);
                 props.canvasCtx.stroke();
             } else {
@@ -203,8 +204,8 @@
                 }
                 props.analyser.getByteTimeDomainData(props.dataArray);
                 
-                var left = e.inputBuffer.getChannelData (0);
-                var right = e.inputBuffer.getChannelData (1);
+                var left = e.inputBuffer.getChannelData(0);
+                var right = e.inputBuffer.getChannelData(1);
                 // we clone the samples
                 props.leftchannel.push (new Float32Array (left));
                 props.rightchannel.push (new Float32Array (right));
@@ -213,8 +214,8 @@
             };
 
             // we connect the props.recorder
-            props.volume.connect (props.recorder);
-            props.recorder.connect (props.context.destination);
+            props.volume.connect(props.recorder);
+            props.recorder.connect(props.context.destination);
         },
         "toggleRecording": function () {
             if (this.classList.contains("playing")) {
@@ -301,6 +302,11 @@
             factory.sendAudio(data).then(function successCB (response) {
                 console.log("SUCCESS SENDING AUDIO");
                 console.log(response);
+
+
+                if (response.conversation.context.dance) {
+                    socket.emit("dance");
+                }
 
                 var audioEl = document.querySelector("#audio");
                 var sourceEl = document.querySelector("#audio > source");
