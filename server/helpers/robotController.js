@@ -4,20 +4,16 @@
 (function () {
     "use strict";
 
+    var fs = require("fs");
+    var Sound = require('node-aplay');
+    var AudioContext = require("web-audio-api").AudioContext;
+
     var pcmdata = [] ;
     var samplerate ;
-    var soundfile = "./server/temp/audio/club.wav";
-    var threshodld = 0 ;
     var iswaving = false;
     var isplaying = false;
     var mincycle = 500;
     var maxcycle = 2300;
-    var dutycycle = mincycle;
-    var fs = require("fs");
-    var Sound = require('node-aplay');
-
-
-    var AudioContext = require("web-audio-api").AudioContext;
     var context = new AudioContext;
     
     var methods = {
@@ -107,26 +103,6 @@
             }
         }
     };
-    
-    module.exports = function (io, gpio) {
-        io.on('connection', function (socket) {
-            // ticketCountry = countryCodes(req.body.employeeCountry.toUpperCase());
-            console.log("connected");
+    module.exports = methods;
 
-            socket.on("move", function (obj) {
-                console.log(obj);
-            });
-
-            socket.on("dance", function () {
-                methods.dance();
-            });
-
-            socket.once('disconnect', function () {
-                console.log([io.engine.clientsCount, 'Clients connected after this exit'].join(' '));
-            });
-        });
-    };
-
-
-    methods.dance(soundfile);
 }());

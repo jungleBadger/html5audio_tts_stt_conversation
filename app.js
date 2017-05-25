@@ -22,6 +22,7 @@
         ttsFactory = require("./server/factory/textConverter")(),
         wcsFactory = require("./server/factory/conversation")(),
         multer = require("multer"),
+        robotController = require("./server/helpers/robotController"),
         io = require("socket.io")(server),
         upload = multer({
             fileFilter: function (req, file, cb) {
@@ -57,9 +58,7 @@
             next();
         }
     });
-    require("./server/routes/index.script")(app, upload, ttsFactory, sttFactory, wcsFactory, FileHandler, fs);
-    require("./server/helpers/robotController")(io);
-
+    require("./server/routes/index.script")(app, upload, ttsFactory, sttFactory, wcsFactory, FileHandler, fs, io, null, robotController);
     server.listen(appEnv.port, appEnv.bind, function () {
         console.log(appEnv.url);
     });
