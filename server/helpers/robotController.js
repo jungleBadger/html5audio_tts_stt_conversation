@@ -20,8 +20,13 @@
 	var color = new Uint32Array(NUM_LEDS);
 	ws281x.init(NUM_LEDS);
 	pigpio.initialize();
+	var event;
 
-
+	var red = 0x00ff00;
+	var green = 0xff0000;
+	var blue = 0x0000ff;
+	var yellow = 0xffff00;
+	var purple = 0x00ffff;
 
     var methods = {
         "dance": function (soundfile) {
@@ -64,6 +69,9 @@
                 if (index >= pcmdata.length) {
                     clearInterval(samplesound);
                     console.log("finished sampling sound");
+					clearInterval(event);
+					color[0] = blue;
+					ws281x.render(color);
                     return;
                 }
                 for (var i = index; i < index + step; i += 1){
@@ -120,17 +128,13 @@
 		"setLEDRandom": function (colorval){
 			var colors = [0x00ff00,0xff0000,0x0000ff,0xffff00,0x00ffff];
 
+			event = setInterval(request, 100);
+
 			function request() {
 				var colorN =  Math.floor(Math.random() * (colors.length - 0 + 1)) + 0;
 				color[0] = colors[colorN] ;
 				ws281x.render(color);
 			}
-			setInterval(request, 100);
-			// ----  reset LED before exit
-			process.on('SIGINT', function () {
-				ws281x.reset();
-				process.nextTick(function () { process.exit(0); });
-			});
 		}
     };
     module.exports = methods;
