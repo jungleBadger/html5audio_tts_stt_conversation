@@ -7,7 +7,6 @@
     var fs = require("fs");
     var Sound = require('node-aplay');
     var AudioContext = require("web-audio-api").AudioContext;
-
     var pcmdata = [] ;
     var samplerate ;
     var iswaving = false;
@@ -23,21 +22,21 @@
         "decodeSoundFile": function (soundfile) {
             console.log("decoding mp3 file ", soundfile, " ..... ");
             fs.readFile(soundfile, function(err, buf) {
-                if (err) throw err;
+                if (err) {
+                    throw err;
+                }
                 context.decodeAudioData(buf, function(audioBuffer) {
-                    console.log("AQUIIIIII");
-                    console.log(audioBuffer.numberOfChannels, audioBuffer.length, audioBuffer.sampleRate, audioBuffer.duration);
                     pcmdata = (audioBuffer.getChannelData(0)) ;
                     samplerate = audioBuffer.sampleRate;
                     methods.findPeaks(pcmdata, samplerate);
                     methods.playsound(soundfile);
-                }, function(err) { throw err })
+                }, function(err) {
+                    throw err;
+                });
             });
         },
         "playsound": function (soundfile) {
             isplaying = true ;
-            console.log("HEREEEE" );
-            console.log(soundfile);
             var music = new Sound(soundfile);
             music.play();
             music.on('complete', function () {
@@ -48,30 +47,35 @@
         "findPeaks": function (pcmdata, samplerate, threshold) {
             var interval = 0.05 * 1000 ; var index = 0 ;
             var step = Math.round( samplerate * (interval/1000) );
-            var max = 0 ;   var prevmax = 0 ;  var prevdiffthreshold = 0.3 ;
+            var max = 0;
+            var prevmax = 0;
+            var prevdiffthreshold = 0.3;
 
             //loop through song in time with sample rate
             var samplesound = setInterval(function() {
                 if (index >= pcmdata.length) {
                     clearInterval(samplesound);
-                    console.log("finished sampling sound")
+                    console.log("finished sampling sound");
                     return;
                 }
-                for(var i = index; i < index + step ; i++){
-                    max = pcmdata[i] > max ? pcmdata[i].toFixed(1)  : max ;
+                for (var i = index; i < index + step; i += 1){
+                    max = pcmdata[i] > max ? pcmdata[i].toFixed(1) : max;
                 }
                 // Spot a significant increase? Wave Arm
-                // if(max-prevmax >= prevdiffthreshold){
-                //     methods.waveArm("dance");
-                // }
-                prevmax = max ; max = 0 ; index += step ;
-            }, interval,pcmdata);
+                if(max - prevmax >= prevdiffthreshold) {
+                    methods.waveArm("dance");
+                }
+                prevmax = max;
+                max = 0;
+                index += step;
+            }, interval, pcmdata);
         },
         "waveArm": function (action) {
             iswaving = true ;
             var Gpio = pigpio.Gpio;
-            var motor = new Gpio(7, {mode: Gpio.OUTPUT});
-            //pigpio.terminate();
+            var motor = new Gpio(7, {
+                "mode": Gpio.OUTPUT
+            });
             var times =  8 ;
             var interval = 700 ;
 
@@ -79,10 +83,10 @@
                 var pulse = setInterval(function() {
                     motor.servoWrite(maxcycle);
                     setTimeout(function(){
-                        if (motor != null) {
+                        if (motor) {
                             motor.servoWrite(mincycle);
                         }
-                    }, interval/3);
+                    }, interval / 3);
 
                     if (times-- === 0) {
                         clearInterval(pulse);
@@ -92,10 +96,10 @@
                                 iswaving = false ;
                             }, 500);
                         }
-                        return;
+                        return false;
                     }
                 }, interval);
-            }else {
+            } else {
                 motor.servoWrite(maxcycle);
                 setTimeout(function(){
                     motor.servoWrite(mincycle);
