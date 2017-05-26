@@ -15,19 +15,18 @@
     var maxcycle = 2300;
     var context = new AudioContext;
 	var pigpio = require('pigpio');
-	pigpio.initialize();
 	var ws281x = require('rpi-ws281x-native');
 	var NUM_LEDS = 1;
 	var color = new Uint32Array(NUM_LEDS);
 	ws281x.init(NUM_LEDS);
-
+	pigpio.initialize();
 	// ----  reset LED before exit
 	process.on('SIGINT', function () {
 		ws281x.reset();
 		process.nextTick(function () { process.exit(0); });
 	});
 
-	var colors = [0x00ff00,0xff0000,0x0000ff,0xffff00,0x00ffff];
+	var colors = [0x00ff00 ,0xff0000 ,0x0000ff ,0xffff00 ,0x00ffff ];
 
     var methods = {
         "dance": function (soundfile) {
