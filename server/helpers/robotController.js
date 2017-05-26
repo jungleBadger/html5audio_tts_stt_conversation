@@ -125,7 +125,7 @@
 		},
 		"setLEDRandom": function (colorval){
 			function request() {
-				colorRandom = Math.floor(Math.random() * (colors.length - 0 + 1)) + 0;
+				var colorRandom = Math.floor(Math.random() * (colors.length - 0 + 1)) + 0;
 				color[0] = colorRandom ;
 				ws281x.render(color);
 			}
