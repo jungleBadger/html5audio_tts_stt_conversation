@@ -16,7 +16,7 @@
     var context = new AudioContext;
     var pigpio = require('pigpio');
     pigpio.initialize();
-    
+
     var methods = {
         "dance": function (soundfile) {
             methods.decodeSoundFile(soundfile);
@@ -72,14 +72,14 @@
                 index += step;
             }, interval, pcmdata);
         },
-        "waveArm": function (action) {
+        "waveArm": function (timesAmount, intervalAmount) {
             iswaving = true ;
             var Gpio = pigpio.Gpio;
             var motor = new Gpio(7, {
                 "mode": Gpio.OUTPUT
             });
-            var times =  8 ;
-            var interval = 700 ;
+            var times =  timesAmount || 8;
+            var interval = intervalAmount || 700;
 
             if (action === "wave") {
                 var pulse = setInterval(function() {

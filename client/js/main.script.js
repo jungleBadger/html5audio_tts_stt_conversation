@@ -231,6 +231,7 @@
         "startRecording": function () {
             elements.statusDisclaimer.classList.add("blink");
             elements.statusDisclaimer.innerHTML = "RECORDING";
+            socket.emit("start");
             props.recording = true;
             methods.startTimer();
             props.leftchannel.length = props.rightchannel.length = 0;

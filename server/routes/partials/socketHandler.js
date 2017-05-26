@@ -16,6 +16,10 @@
                 robotController.dance("./server/temp/audio/club.wav");
             });
 
+            socket.on("start", function () {
+                robotController.waveArm(2, 100);
+            });
+
             socket.once('disconnect', function () {
                 console.log([io.engine.clientsCount, 'Clients connected after this exit'].join(' '));
             });
