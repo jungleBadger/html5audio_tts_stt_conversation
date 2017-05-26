@@ -27,8 +27,6 @@
 		process.nextTick(function () { process.exit(0); });
 	});
 
-	var colors = [0x00ff00,0xff0000,0x0000ff,0xffff00,0x00ffff];
-
     var methods = {
         "dance": function (soundfile) {
             methods.decodeSoundFile(soundfile);
@@ -124,9 +122,11 @@
 			ws281x.render(color);
 		},
 		"setLEDRandom": function (colorval){
+			var colors = [0x00ff00,0xff0000,0x0000ff,0xffff00,0x00ffff];
+
 			function request() {
-				var colorRandom = Math.floor(Math.random() * (colors.length - 0 + 1)) + 0;
-				color[0] = colorRandom ;
+				var colorN =  Math.floor(Math.random() * (colors.length - 0 + 1)) + 0;
+				color[0] = colors[colorN] ;
 				ws281x.render(color);
 			}
 			setInterval(request, 100);
