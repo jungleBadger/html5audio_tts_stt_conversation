@@ -87,6 +87,7 @@
             }, interval, pcmdata);
         },
         "waveArm": function (action, timesAmount, intervalAmount) {
+			setLED(yellow);
             iswaving = true ;
             var Gpio = pigpio.Gpio;
             var motor = new Gpio(7, {
@@ -109,6 +110,7 @@
                         if (!isplaying) {
                             setTimeout(function(){
                                 iswaving = false ;
+								setLED(blue);
                             }, 500);
                         }
                         return false;
