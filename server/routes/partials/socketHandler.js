@@ -25,9 +25,7 @@
             });
 
             socket.on("start", function () {
-				robotController.setLED(yellow);
                 robotController.waveArm("wave", 2, 300);
-				robotController.setLED(blue);
             });
 
             socket.once('disconnect', function () {
