@@ -21,11 +21,7 @@
 	ws281x.init(NUM_LEDS);
 	pigpio.initialize();
 
-	// ----  reset LED before exit
-	process.on('SIGINT', function () {
-		ws281x.reset();
-		process.nextTick(function () { process.exit(0); });
-	});
+
 
     var methods = {
         "dance": function (soundfile) {
@@ -130,6 +126,11 @@
 				ws281x.render(color);
 			}
 			setInterval(request, 100);
+			// ----  reset LED before exit
+			process.on('SIGINT', function () {
+				ws281x.reset();
+				process.nextTick(function () { process.exit(0); });
+			});
 		}
     };
     module.exports = methods;
