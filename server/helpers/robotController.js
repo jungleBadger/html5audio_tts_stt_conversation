@@ -20,6 +20,7 @@
 	var color = new Uint32Array(NUM_LEDS);
 	ws281x.init(NUM_LEDS);
 	pigpio.initialize();
+
 	// ----  reset LED before exit
 	process.on('SIGINT', function () {
 		ws281x.reset();
