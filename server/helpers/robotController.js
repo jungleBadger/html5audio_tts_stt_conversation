@@ -14,12 +14,12 @@
     var mincycle = 500;
     var maxcycle = 2300;
     var context = new AudioContext;
-    var pigpio = require('pigpio');
+	var pigpio = require('pigpio');
+	pigpio.initialize();
 	var ws281x = require('rpi-ws281x-native');
 	var NUM_LEDS = 1;
 	var color = new Uint32Array(NUM_LEDS);
 	ws281x.init(NUM_LEDS);
-    pigpio.initialize();
 
 	// ----  reset LED before exit
 	process.on('SIGINT', function () {
