@@ -17,7 +17,7 @@
             });
 
             socket.on("start", function () {
-                robotController.waveArm("wave", 2, 100);
+                robotController.waveArm("wave", 3, 600);
             });
 
             socket.once('disconnect', function () {
