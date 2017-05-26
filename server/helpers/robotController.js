@@ -94,11 +94,6 @@
                         clearInterval(pulse);
                         if (!isplaying) {
                             setTimeout(function(){
-                                try {
-                                    micInstance.resume();
-                                } catch (e) {
-                                    console.log(e);
-                                }
                                 iswaving = false ;
                             }, 500);
                         }
