@@ -14,6 +14,8 @@
     var mincycle = 500;
     var maxcycle = 2300;
     var context = new AudioContext;
+    var pigpio = require('pigpio');
+    pigpio.initialize();
     
     var methods = {
         "dance": function (soundfile) {
