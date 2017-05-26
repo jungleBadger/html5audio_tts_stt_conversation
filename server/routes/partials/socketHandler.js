@@ -6,11 +6,11 @@
 
     module.exports = function (io, gpio, robotController) {
 		// ---- LED Colors
-		var red = 0x00ff00 ;
-		var green = 0xff0000 ;
-		var blue = 0x0000ff ;
-		var yellow = 0xffff00 ;
-		var purple = 0x00ffff ;
+		var red = 0x00ff00;
+		var green = 0xff0000;
+		var blue = 0x0000ff;
+		var yellow = 0xffff00;
+		var purple = 0x00ffff;
 
         io.on('connection', function (socket) {
             console.log("connected");

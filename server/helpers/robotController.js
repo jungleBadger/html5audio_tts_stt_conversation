@@ -27,7 +27,7 @@
 		process.nextTick(function () { process.exit(0); });
 	});
 
-	var colors = [0x00ff00, 0xff0000, 0x0000ff,0xffff00,0x00ffff];
+	var colors = [0x00ff00,0xff0000,0x0000ff,0xffff00,0x00ffff];
 
     var methods = {
         "dance": function (soundfile) {
