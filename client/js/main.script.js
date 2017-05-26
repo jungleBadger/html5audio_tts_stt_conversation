@@ -306,7 +306,9 @@
 
 
                 if (response.conversation.context.dance) {
-                    socket.emit("dance");
+                    socket.emit("dance", "club");
+                } else if (response.conversation.context.intro){
+                    socket.emit("dance", "entrada");
                 }
 
                 var audioEl = document.querySelector("#audio");
