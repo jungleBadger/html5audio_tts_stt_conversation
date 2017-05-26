@@ -19,9 +19,9 @@
                 console.log(obj);
             });
 
-            socket.on("dance", function () {
+            socket.on("dance", function (music) {
 				robotController.setLEDRandom();
-                robotController.dance("./server/temp/audio/club.wav");
+                robotController.dance("./server/temp/audio/" + (music || "club") + ".wav");
             });
 
             socket.on("start", function () {
