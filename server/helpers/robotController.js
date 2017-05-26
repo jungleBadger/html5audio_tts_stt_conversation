@@ -72,7 +72,7 @@
                 index += step;
             }, interval, pcmdata);
         },
-        "waveArm": function (timesAmount, intervalAmount) {
+        "waveArm": function (action, timesAmount, intervalAmount) {
             iswaving = true ;
             var Gpio = pigpio.Gpio;
             var motor = new Gpio(7, {
